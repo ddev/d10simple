@@ -44,7 +44,7 @@ final class Application extends BaseApplication implements ContainerAwareInterfa
   /**
    * DCG version.
    */
-  public const VERSION = '3.0.0';
+  public const VERSION = '3.1.0';
 
   /**
    * DCG API version.

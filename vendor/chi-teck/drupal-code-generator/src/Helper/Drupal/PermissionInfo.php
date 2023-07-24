@@ -30,11 +30,11 @@ final class PermissionInfo extends Helper {
    * Gets names of all available permissions.
    *
    * @psalm-return list<string>
-   * @psalm-suppress MoreSpecificReturnType
    */
   public function getPermissionNames(): array {
-    /** @psalm-suppress LessSpecificReturnStatement */
-    return \array_keys($this->permissionHandler->getPermissions());
+    $permissions = \array_keys($this->permissionHandler->getPermissions());
+    \sort($permissions);
+    return $permissions;
   }
 
 }

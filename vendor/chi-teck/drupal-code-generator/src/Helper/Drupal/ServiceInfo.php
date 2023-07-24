@@ -50,7 +50,18 @@ final class ServiceInfo extends Helper {
    * @psalm-return array<string, array>
    */
   public function getServiceDefinitions(): array {
-    return \array_map('unserialize', $this->getSerializedDefinitions());
+    return \array_filter(
+      \array_map('unserialize', $this->getSerializedDefinitions()),
+      static fn (array $definition, string $id): bool =>
+        // Filter out parameters.
+        \array_key_exists('class', $definition) &&
+        // Filter out Drush services.
+        !\str_starts_with(\ltrim($definition['class'], '\\'), 'Drush') &&
+        // Filter out aliases.
+        // @todo Should we support aliases?
+        !\str_contains($id, '\\'),
+      \ARRAY_FILTER_USE_BOTH,
+    );
   }
 
   /**
@@ -59,10 +70,7 @@ final class ServiceInfo extends Helper {
    * @psalm-return array<string, string>
    */
   public function getServiceClasses(): array {
-    $service_definitions = \array_filter(
-      $this->getServiceDefinitions(),
-      static fn ($definition): bool => \array_key_exists('class', $definition),
-    );
+    $service_definitions = $this->getServiceDefinitions();
     /** @psalm-var array<string, class-string> $classes */
     $classes = \array_combine(
       \array_keys($service_definitions),

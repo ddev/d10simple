@@ -201,11 +201,15 @@ class ServiceManager
             ->getClasses();
 
         return array_filter($classes, function (string $class): bool {
+            try {
                 $reflectionClass = new \ReflectionClass($class);
-                return $reflectionClass->isSubclassOf(BaseGenerator::class)
-                    && !$reflectionClass->isAbstract()
-                    && !$reflectionClass->isInterface()
-                    && !$reflectionClass->isTrait();
+            } catch (\Throwable $e) {
+                return false;
+            }
+            return $reflectionClass->isSubclassOf(BaseGenerator::class)
+                && !$reflectionClass->isAbstract()
+                && !$reflectionClass->isInterface()
+                && !$reflectionClass->isTrait();
         });
     }
 
@@ -235,7 +239,7 @@ class ServiceManager
      *
      * @param string[] $directoryList List of directories to search
      * @param string $baseNamespace The namespace to use at the base of each
-     *   search diretory. Namespace components mirror directory structure.
+     *   search directory. Namespace components mirror directory structure.
      *
      * @return string[]
      */
