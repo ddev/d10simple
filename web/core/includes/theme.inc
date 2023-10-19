@@ -1827,6 +1827,7 @@ function template_preprocess_pager(&$variables) {
     $items['pages'][$i]['attributes'] = new Attribute();
     if ($i == $pager_current) {
       $variables['current'] = $i;
+      $items['pages'][$i]['attributes']->setAttribute('aria-current', 'page');
     }
   }
   // Add an ellipsis if there are further next pages.

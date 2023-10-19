@@ -27,8 +27,7 @@ class HtmlTest extends TestCase {
     parent::setUp();
 
     $property = new \ReflectionProperty('Drupal\Component\Utility\Html', 'seenIdsInit');
-    $property->setAccessible(TRUE);
-    $property->setValue(NULL);
+    $property->setValue(NULL, NULL);
   }
 
   /**
@@ -301,6 +300,7 @@ class HtmlTest extends TestCase {
       ['→', '→'],
       ['➼', '➼'],
       ['€', '€'],
+      // cspell:disable-next-line
       ['Drup�al', "Drup\x80al"],
     ];
   }

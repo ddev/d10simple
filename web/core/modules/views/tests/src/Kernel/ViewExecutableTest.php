@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Tests the ViewExecutable class.
  *
  * @group views
+ * @group #slow
  * @see \Drupal\views\ViewExecutable
  */
 class ViewExecutableTest extends ViewsKernelTestBase {
@@ -395,7 +396,6 @@ class ViewExecutableTest extends ViewsKernelTestBase {
    */
   protected function getProtectedProperty($instance, $property) {
     $reflection = new \ReflectionProperty($instance, $property);
-    $reflection->setAccessible(TRUE);
     return $reflection->getValue($instance);
   }
 

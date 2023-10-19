@@ -7,8 +7,8 @@
 
 Creating a new Drush command is easy. Follow the steps below.
 
-1. Run `drush generate drush-command-file`.
-2. Drush will prompt for the machine name of the module that should "own" the file. The module selected must already exist and be enabled. Use `drush generate module-standard` to create a new module.
+1. Run `drush generate drush:command-file`.
+2. Drush will prompt for the machine name of the module that should "own" the file. The module selected must already exist and be enabled. Use `drush generate module` to create a new module.
 3. Drush will then report that it created a commandfile. Edit as needed.
 4. Use the classes for the core Drush commands at [/src/Commands](https://github.com/drush-ops/drush/tree/12.x/src/Commands) as inspiration and documentation.
 5. See the [dependency injection docs](dependency-injection.md) for interfaces you can implement to gain access to Drush config, Drupal site aliases, etc. Also note the [create() method](dependency-injection.md#create-method) for injecting Drupal or Drush dependencies.
@@ -69,7 +69,7 @@ In the module that wants to alter a command info, add a class that:
 1. Implement the alteration logic in the `alterCommandInfo()` method.
 1. Along with the alter code, it's strongly recommended to log a debug message explaining what exactly was altered. This makes things easier on others who may need to debug the interaction of the alter code with other modules. Also it's a good practice to inject the the logger in the class constructor.
 
-For an example, see [WootCommandInfoAlterer](https://github.com/drush-ops/drush/blob/12.x/sut/modules/unish/woot/src/WootCommandInfoAlterer.php) provided by the testing 'woot' module.
+For an example, see [WootCommandInfoAlterer](https://github.com/drush-ops/drush/blob/12.x/sut/modules/unish/woot/src/Drush/CommandInfoAlterers/WootCommandInfoAlterer.php) provided by the testing 'woot' module.
 
 ## Symfony Console Commands
 Drush lists and runs Symfony Console commands, in addition to more typical annotated commands. See [this test](https://github.com/drush-ops/drush/blob/eed106ae4510d5a2df89f8e7fd54b41ffb0aa5fa/tests/integration/AnnotatedCommandCase.php#L178-L180) and this [commandfile](https://github.com/drush-ops/drush/blob/12.x/sut/modules/unish/woot/src/Commands/GreetCommand.php).
